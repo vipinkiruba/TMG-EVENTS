@@ -1,0 +1,22 @@
+*----------------------------------------------------------------------*
+***INCLUDE LZTSTUDENTSF01.
+*----------------------------------------------------------------------*
+FORM validate_entry.
+  DATA lwa_row TYPE ztstudents.
+
+  LOOP AT total.
+    CLEAR lwa_row.
+    IF <vim_total_struc> IS ASSIGNED.
+      MOVE-CORRESPONDING <vim_total_struc> TO lwa_row.
+    ENDIF.
+
+    IF <action> NE 'D' AND <action> IS NOT INITIAL AND <action> NE 'X'.
+      IF ztstudents-gender NE 'M' AND ztstudents-gender NE 'F'.
+        MESSAGE 'Gender must be M or F' TYPE 'S' DISPLAY LIKE 'E'.
+        vim_abort_saving = 'X'.
+        EXIT.
+      ENDIF.
+    ENDIF.
+  ENDLOOP.
+
+ENDFORM.
